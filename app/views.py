@@ -4,9 +4,12 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
-from app import app
-from flask import render_template, request, redirect, url_for
+import os
+from app import app,db
+from flask import render_template, flash, request, redirect, url_for,send_from_directory
+from .forms import PropertyForm
+from app.models import Property
+from werkzeug.utils import secure_filename
 
 
 ###
@@ -22,9 +25,46 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Kyle Watson")
+
+@app.route('/property', methods=["GET", "POST"])
+def add_property():
+    form=PropertyForm()
+    if request.method=='POST' and form.validate_on_submit():
+        title = request.form['title']
+        NumBedrooms=request.form['NumBedrooms']
+        NumBathrooms=request.form['NumBathrooms']
+        location=request.form['location']
+        price= request.form['price']
+        propertyType = request.form['houseType']
+        description=request.form['description']
+        fileName= save_photos(form.photo.data) 
+        _property = Property(title, description, NumBedrooms, NumBathrooms, price, propertyType, location,fileName)
+        db.session.add(_property)
+        db.session.commit()
+        return redirect(url_for('display_properties'))
+    return render_template('add_property.html',form=form)
+
+@app.route('/properties', methods=["GET"])
+def display_properties():
+    allProperties=db.session.query(Property).all()
+    return render_template('display_properties.html',properties=allProperties)
 
 
+@app.route('/property/<propertyid>', methods=["GET"])
+def display_property(propertyid):
+    _property = db.session.query(Property).filter(Property.id == propertyid).first()
+    return render_template('display_property.html', _property=_property)
+
+@app.route('/get_image/<filename>')
+def get_image(filename):
+    root_dir = os.getcwd()
+    return send_from_directory(os.path.join(root_dir, app.config['UPLOAD_FOLDER']), filename)
+
+def save_photos(photo):
+    fileName = secure_filename(photo.filename)
+    photo.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+    return fileName
 ###
 # The functions below should be applicable to all Flask apps.
 ###

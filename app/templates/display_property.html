@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{%block main%}
+<div>
+    <div> 
+        <img src="{{url_for('get_image', filename=_property.photo)}}">
+    </div>
+    <div>
+        <h2>{{_property.title}}</h2>
+        <div>
+            <p>${{_property.price}}</p>
+            <p>{{_property.prop_type}}</p>
+        </div>
+        <p>{{_property.description}}</p>
+        <div>
+            <span>
+                <p>{{_property.rooms}} Bedrooms</p>
+            </span>
+            <span>
+                <p>{{_property.bathrooms}} Bathrooms</p>
+            </span>
+        </div>
+        <div>
+            <p>{{_property.location}}</p>
+        </div>
+        <button>Email Realtor</button>
+    </div>
+</div>
+{%endblock%}

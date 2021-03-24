@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%block main%}
+<h1>Properties</h1>
+<br>
+<div>
+    {% for property in properties%}
+    <div>
+        <img src="{{url_for('get_image',filename=property.photo)}}" class="prop_img">
+        <div>
+            <h2>{{property.title}}</h2>
+            <div class="location">
+                <img src="{{url_for('static', filename='location-icon.png')}}">
+                <p>{{property.location}}</p>
+            </div>
+            <p>${{property.price}}</p>
+        </div>
+        <a href="{{url_for('display_property',propertyid=property.id)}}"><button>View Property</button></a>
+    </div>
+    {%endfor%}
+</div>
+{%endblock%}
