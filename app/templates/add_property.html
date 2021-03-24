@@ -2,45 +2,45 @@
 {%block main%}
 
 <h1>Add New Property</h1>
-<div class="add_div">
+<div>
 
     <form action="{{url_for('add_property')}}" method="POST" enctype="multipart/form-data">
         {{form.csrf_token}}
-        <div class="form-group">
+        <div>
             {{form.title.label}}
             {{form.title (class='form-control')}}
         </div>
-        <div class="form-group">
+        <div>
             {{form.description.label}}
             {{form.description (class='form-control')}}
         </div>
-        <div class="display_grid">
+        <div>
             <div class="form-group">
                 {{form.NumBedrooms.label}}
                 {{form.NumBedrooms (class='form-control')}}
             </div>
-            <div class="form-group">
+            <div>
                 {{form.NumBathrooms.label}}
                 {{form.NumBathrooms (class='form-control')}}
             </div>
-            <div class="form-group">
+           <div>
                 {{form.price.label}}
                 {{form.price (class='form-control')}}
             </div>
-            <div class="form-group">
+            <div>
                 {{form.houseType.label}}
                 {{form.houseType (class='form-control')}}
             </div>
         </div>
-        <div class="form-group">
+        <div>
             {{form.location.label}}
             {{form.location (class='form-control')}}
         </div>
-        <div class="form-group">
+        <div>
             {{form.photo.label}}
             {{form.photo}}
         </div>
-        <button name="submit" type="submit" class="btn btn-primary">Add Property</button>
+        <button name="submit" type="submit">Add Property</button>
     </form>
 </div>
 {%endblock%}

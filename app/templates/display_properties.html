@@ -5,11 +5,10 @@
 <div>
     {% for property in properties%}
     <div>
-        <img src="{{url_for('get_image',filename=property.photo)}}" class="prop_img">
+        <img src="{{url_for('get_image',filename=property.photo)}}">
         <div>
             <h2>{{property.title}}</h2>
-            <div class="location">
-                <img src="{{url_for('static', filename='location-icon.png')}}">
+            <div>
                 <p>{{property.location}}</p>
             </div>
             <p>${{property.price}}</p>
